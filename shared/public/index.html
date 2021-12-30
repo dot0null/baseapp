@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Shared Header</title>
+    <script>
+      window.env = {
+        logoUrl: 'https://market.bitzlato.com/assets/bitzlato_logo--sm--blue--nav.svg',
+        logoDarkUrl: 'https://market.bitzlato.com/assets/bitzlato_logo--sm--white--nav.svg',
+      };
+    </script>
+    <style>
+      @font-face {
+        font-family: 'Montserrat';
+        font-style: normal;
+        font-weight: 400;
+        src: url('/fonts/montserrat-regular.woff2') format('woff2'),
+          url('/fonts/montserrat-regular.woff') format('woff');
+      }
+
+      @font-face {
+        font-family: 'Montserrat';
+        font-style: normal;
+        font-weight: 600;
+        src: url('/fonts/montserrat-600.woff2') format('woff2'),
+          url('/fonts/montserrat-600.woff') format('woff');
+      }
+
+      body {
+        all: unset;
+        display: revert;
+        box-sizing: border-box;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>

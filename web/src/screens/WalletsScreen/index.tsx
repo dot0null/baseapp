@@ -10,7 +10,7 @@ import { Box } from 'src/components/Box';
 import { defaultCurrency } from 'src/modules/public/currencies/defaults';
 import { defaultBeneficiary } from 'src/modules/user/beneficiaries/defaults';
 import { defaultWallet } from 'src/modules/user/wallets/defaults';
-import { IntlProps } from '../../';
+import { IntlProps } from '../../bootstrap';
 import {
   Blur,
   CurrencyInfo,

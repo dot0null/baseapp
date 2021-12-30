@@ -26,6 +26,8 @@ const extractSemver = (text) => {
 const isDevelopment = process.env.NODE_ENV === 'development';
 const appVersion = extractSemver(fs.readFileSync('../.semver').toString());
 
+const sharedURL = process.env.SHARED_URL ?? '/shared';
+
 /** @type {webpack.WebpackOptionsNormalized} */
 module.exports = {
   mode: isDevelopment ? 'development' : 'production',
@@ -35,7 +37,7 @@ module.exports = {
   devtool: isDevelopment ? 'eval-cheap-module-source-map' : 'source-map',
 
   entry: {
-    bundle: './src/index.tsx',
+    bundle: './src/index.ts',
   },
 
   output: {
@@ -229,6 +231,14 @@ module.exports = {
 
     new webpack.ProvidePlugin({
       Buffer: ['buffer', 'Buffer'],
+    }),
+
+    new webpack.container.ModuleFederationPlugin({
+      name: 'baseapp',
+      remotes: {
+        shared: `shared@${sharedURL}/shared.js`,
+      },
+      shared: { react: { singleton: true }, 'react-dom': { singleton: true } },
     }),
   ].filter(Boolean),
 
