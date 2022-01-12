@@ -2,13 +2,13 @@ import React, { useEffect } from 'react';
 import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { useT } from 'src/hooks/useT';
+import { useFetch } from 'src/hooks/useFetch';
+import { useAlert } from 'src/hooks/useAlert';
 import { setDocumentTitle } from '../../helpers';
 import { Table } from 'src/components';
 import { currenciesFetch } from 'src/modules/public/currencies/actions';
 import { selectCurrencies } from 'src/modules/public/currencies/selectors';
 import { selectMobileDeviceState } from 'src/modules/public/globalSettings/selectors';
-import { selectTradingFees } from 'src/modules/public/tradingFees/selectors';
-import { tradingFeesFetch } from 'src/modules/public/tradingFees/actions';
 import { CryptoCurrencyIcon } from 'src/components/CryptoCurrencyIcon/CryptoCurrencyIcon';
 import { AmountFormat } from 'src/components/AmountFormat/AmountFormat';
 import { Box } from 'src/components/Box';
@@ -16,9 +16,13 @@ import { Card } from 'src/components/Card/Card';
 import { TradingFees } from 'src/containers/Fees/TradingFees';
 import { Subheader } from 'src/mobile/components/Subheader';
 import { CurrencyTicker } from 'src/components/CurrencyTicker/CurrencyTicker';
+import { TradingFee } from 'src/modules/public/tradingFees/types';
 import s from './Fees.postcss';
 
 export const FeesScreen: React.FC = () => {
+  const [tradingFees, error] = useFetch<TradingFee[]>('/api/v2/peatio/public/trading_fees', []);
+  useAlert(error);
+
   const t = useT();
   const dispatch = useDispatch();
   const isMobile = useSelector(selectMobileDeviceState);
@@ -29,11 +33,9 @@ export const FeesScreen: React.FC = () => {
   useEffect(() => {
     setDocumentTitle(t('page.body.landing.footer.fees'));
     dispatch(currenciesFetch());
-    dispatch(tradingFeesFetch());
   }, [dispatch]);
 
   const currencies = useSelector(selectCurrencies);
-  const tradingFees = useSelector(selectTradingFees);
 
   const header = [
     t('page.fees.table.coin'),
